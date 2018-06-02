@@ -6,8 +6,10 @@ use Illuminate\Support\Facades\DB;
 use Validator;
 use Illuminate\Http\Request;
 use App\User;
+use App\file;
 use Auth;
 use Carbon\Carbon;
+use Session;
 
 class RegisterShowController extends Controller
 {
@@ -73,6 +75,10 @@ class RegisterShowController extends Controller
       $createdTime = Carbon::now()->toDateTimeString();
       $updatedTme = Carbon::now()->toDateTimeString();
       $token = str_random(50);
+      $ip = $request->ip;
+      $phone = $request->phone;
+      $status = $request->status;
+      //$image = $request->pic;
 
       $user = new User();
 
@@ -91,6 +97,30 @@ class RegisterShowController extends Controller
                 ->withInput();
         }
 
+        //----------------------------------------------
+        if($request->hasFile('pic'))
+        {
+            $file = $request->file('pic');
+            $filesize = $file->getSize();
+            $filename = $file->getClientOriginalName();
+            $file->move('uploads', $file->getClientOriginalName());
+            echo $filesize;
+
+            $f = new File();
+            $f->Name = $filename;
+            $f->Size = $filesize;
+            $f->save();
+            //return 'yes';
+            // echo $request->pic;
+            // echo "protik";
+        }
+        else
+        {
+            echo 'Error uploading file';
+        }
+        
+        //-------------------------------------------------
+
       //if ($password == $passwordC)
       //{
         $user->name = $name;
@@ -100,8 +130,19 @@ class RegisterShowController extends Controller
         $user->remember_token = $token;
         $user->created_at = $createdTime;
         $user->updated_at = $updatedTme;
+        $user->ip = $ip;
+        $user->phone = $phone;
+        $user->status = $status;
 
         $user->save();
+
+        // $profile_user=  User::orderBy('id', 'desc')->first();
+        // print_r($profile_user);
+        // die();
+        // $file = new File();
+
+
+
         return redirect()->route('registershow.showAllUsers');
       //}
       // else
@@ -123,9 +164,52 @@ class RegisterShowController extends Controller
       //   // echo "</script>";
       //
       // }
-
-
-
-
     }
+
+    //userEdit
+    public function edit(Request $req)
+    {
+      // code...
+      $id = $req->id;
+      $userId = DB::table('users')->where('id',$id)->first();
+      // echo "<pre>";
+      // print_r($userId);
+      return view('usertype.admin.user_edit')->withUid($userId);
+    }
+
+    //user update
+    public function update(Request $request)
+    {
+      $id = $request->id;
+      $user = User::find($id);
+      $user->name = $request->name;
+      $user->email = $request->email;
+      $user->role = $request->role;
+      $user->ip = $request->ip;
+      $user->phone = $request->phone;
+      $user->status = $request->status;
+      $user->save();
+      return redirect()->route('registershow.showAllUsers');
+    }
+
+    //user deactivation
+    public function deactivateUser(Request $request)
+    {
+      $id = $request->id;
+      DB::table('users')->where('id', $id)
+      ->update(['status' => 0]);
+      Session::flash('deactivate', 'User Dectivated successfully!');
+      return redirect()->route('registershow.showAllUsers');
+    }
+
+    //user Activation
+    public function activateUser(Request $request)
+    {
+      $id = $request->id;
+      DB::table('users')->where('id', $id)
+      ->update(['status' => 1]);
+      Session::flash('activate', 'User Activated successfully!');
+      return redirect()->route('registershow.showAllUsers');
+    }
+
 }

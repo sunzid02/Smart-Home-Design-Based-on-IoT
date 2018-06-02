@@ -17,9 +17,9 @@ class FileController extends Controller
     {
         if($request->hasFile('pic'))
         {
-            $file = $request->file('pic');
-            $filename = $file->getClientOriginalName();
-            $ph = "E:/wamp64/www/theses_update/public/uploads/".$filename;
+            $pic = $request->file('pic');
+            $filename = $pic->getClientOriginalName();
+            $ph = "C:/Users/joy/Desktop/photos/".$filename;
 
             //--------------------------
 
@@ -50,7 +50,7 @@ class FileController extends Controller
             //echo $p;
             //path set for database
 
-            $photo = "E:/wamp64/www/theses_update/public/uploads/".$p;
+            $photo = "F:/protik/thessi/thesis_update_1/public/uploads/".$p;
             //echo $photo;
 
             $im = imagecreatefrompng($photo);
@@ -70,11 +70,7 @@ class FileController extends Controller
             }
 
         }
-        return view('file.unkown');
-
-
-
-
+        return view('file.unkown')->with('pic',$ph);
 
         }
         /*if($request->hasFile('pic'))
@@ -164,4 +160,31 @@ class FileController extends Controller
     		echo 'Error uploading file';
     	}
     }*/
+
+    public function save(Request $request)
+    {
+
+        if($request->hasFile('pic'))
+        {
+            $file = $request->file('pic');
+            $filesize = $file->getSize();
+            $filename = $file->getClientOriginalName();
+            $file->move('uploads', $file->getClientOriginalName());
+            echo $filesize;
+
+            $f = new File();
+            $f->Name = $filename;
+            $f->Size = $filesize;
+            $f->save();
+            return 'yes';
+            // echo $request->pic;
+            // echo "protik";
+        }
+        else
+        {
+            echo 'Error uploading file';
+        }
+    }
+
+
 }

@@ -41,8 +41,19 @@ class RoomController extends Controller
 
     }
     else if ($role == "subadmin")
-    {    $device = DB::table('rooms')
+    {    $device = DB::table('subadmin_room_device')
                 ->get();
+        // echo "<pre>";
+        // print_r($device);
+        //
+        // foreach (array_keys($device->device, 'Laptop') as $key)
+        // {
+        //     unset($array[$key]);
+        // }
+        // echo "<br>Pore<br>";
+        // echo "<pre>";
+        // print_r($device);
+        // die();
       return view('room.subAdmin.index')
                 ->with('device', $device);
     }

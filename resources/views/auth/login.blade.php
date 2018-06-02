@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Bootstrap Admin Theme</title>
+    <title>Smart Home</title>
 
 
 
@@ -86,20 +86,20 @@
                                     @endif
                               </div>
 
-                              <div class="checkbox">
+                              <!-- <div class="checkbox">
                                   <label>
                                     <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me
                                   </label>
-                              </div>
+                              </div> -->
                               <!-- Change this to a button or input when using this as a form -->
                               <div class="form-group">
                                       <button type="submit" class="btn btn-md btn-success btn-block">
                                           Login
                                       </button>
 
-                                      <a class="btn btn-link" href="{{ route('password.request') }}">
+                                      <!-- <a class="btn btn-link" href="{{ route('password.request') }}">
                                           Forgot Your Password?
-                                      </a>
+                                      </a> -->
 
                               </div>
                               <!-- <a href="index.html" class="btn btn-lg btn-success btn-block">Login</a> -->

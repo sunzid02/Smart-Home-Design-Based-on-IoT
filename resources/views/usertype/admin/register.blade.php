@@ -11,7 +11,7 @@ admin
 
 @section('contents')
 	<div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('registershow.store') }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('registershow.store') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
@@ -64,12 +64,12 @@ admin
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Role</label>
+                        <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
+                            <label for="role" class="col-md-4 control-label">Role</label>
 
                             <div class="col-md-6">
                                 <!-- <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus> -->
-                                <select name = "role" class="form-control" required>
+                                <select name = "role" id="role" class="form-control" required>
                                   <option value=""> Please Select</option>
                                   <option value="admin">Admin</option>
                                   <option value="subadmin">Sub Admin</option>
@@ -83,6 +83,45 @@ admin
                                 @endif
                             </div>
                         </div>
+
+												<!-- ip -->
+												<div class="form-group{{ $errors->has('ip') ? ' has-error' : '' }}">
+														<label for="ip" class="col-md-4 control-label">IP</label>
+
+														<div class="col-md-6">
+																<input id="ip" type="text" class="form-control" name="ip" required>
+														</div>
+												</div>
+
+												<!-- phone -->
+												<div class="form-group{{ $errors->has('phone') ? ' has-error' : '' }}">
+														<label for="phone" class="col-md-4 control-label">Phone</label>
+
+														<div class="col-md-6">
+																<input id="phone" type="number" class="form-control" name="phone" required>
+														</div>
+												</div>
+
+												<!-- status -->
+												<div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+														<label for="status" class="col-md-4 control-label">Status</label>
+														<div class="col-md-6">
+															<select name = "status" id="status" class="form-control" required>
+																<option value=""> Please Select</option>
+																<option value="1">Active</option>
+																<option value="0">Deactive</option>
+															</select>
+														</div>
+												</div>
+
+												<!-- Image -->
+												<div class="form-group">
+														<label for="pic" class="col-md-4 control-label">Image</label>
+														<div class="col-md-6">
+														<input type="file" name="pic"  id="pic" class="form-control" required>
+
+														</div>
+												</div>
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">

@@ -47,7 +47,7 @@ class HomeController extends Controller
          if($role == "admin")
          {
             //echo "admin found";
-            return view('usertype.subAdmin.index')->with('username',$un);
+            return view('usertype.admin.index')->with('username',$un);
          }
          else if($role== "subadmin")
          {
