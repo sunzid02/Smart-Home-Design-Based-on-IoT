@@ -63,11 +63,11 @@
                     <form class="form-horizontal" method="POST">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group">
                             <label for="password" class="col-md-4 control-label">IP Address</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="text" class="form-control" name="ip" required>
+                                <input id="ip" type="text" class="form-control" name="ip" required>
 
                                 <!-- @if ($errors->has('password'))
                                     <span class="help-block">
@@ -91,11 +91,11 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group">
                             <label for="password" class="col-md-4 control-label">Phone</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="text" class="form-control" name="phone" required>
+                                <input id="phone" type="text" class="form-control" name="phone" required>
 
                                 <!-- @if ($errors->has('password'))
                                     <span class="help-block">

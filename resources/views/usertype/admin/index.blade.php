@@ -5,7 +5,7 @@ admin
 @stop
 
 @section('contentsTitle')
-	Welcome {{ $username }}
+	Welcome 
 @stop
 
 

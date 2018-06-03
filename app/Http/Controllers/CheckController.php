@@ -4,18 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\File;
+use App\User;
 use Illuminate\Support\Facades\DB;
-
-// <script type="text/javascript">
-//     function play_sound() {
-//         var audioElement = document.createElement('audio');
-//         audioElement.setAttribute('src', '/assets/music/sound_file.mp3');
-//         audioElement.setAttribute('autoplay', 'autoplay');
-//         audioElement.load();
-//         audioElement.play();
-//     }
-// </script>
-
+use Illuminate\Support\Facades\Auth;
+use Hash;
 
 class CheckController extends Controller
 {
@@ -27,23 +19,57 @@ class CheckController extends Controller
     public function verify(Request $request)
     {
     	//echo $request->ip;
-    	$check = DB::table('checks')
+    	$check = DB::table('users')
                     ->get();
 
-        foreach ($check as $key) {
-        	//echo $key->Email;
-        	if(($request->ip == $key->IP && $request->email == $key->Email) || 
-        		($request->ip == $key->IP && $request->phone == $key->Phone))
+        $ip = $request->ip;
+        $email = $request->email;
+        $phone = $request->phone;
+
+        echo $ip." ".$email." ".$phone;
+        echo "<br>";
+        foreach ($check as $key)
+        {
+          // echo dd($key);
+          $userName= $key->name;
+        	//echo $key->role;
+        	if(($key->ip == $ip && $key->email == $email) ||
+        		($key->ip == $ip && $key->phone == $phone))
         	{
-        		return view('gate.index');
+            if($key->role == "admin")
+            {
+              echo $key->role;
+              echo "admin found";
+              if (Auth::attempt(['ip' => $ip, 'password' => 'adminn', 'status' => 1])) {
+                  // // Authentication passed...
+                  // Hash::check($, $key->password);
+                  // echo "<br>name: ".$key->role."<br>";
+                  // die();
+                  return redirect()->route('home');
+              }
+            }
+            else if($key->role == "subadmin")
+            {
+              echo $key->role;
+              if (Auth::attempt(['ip' => $ip, 'password' => 'subadmin', 'status' => 1])) {
+                  // Authentication passed...
+                  return redirect()->route('home');
+              }
+            }
+            else if($key->role == "guest")
+            {
+              echo $key->role;
+              if (Auth::attempt(['ip' => $ip, 'password' => 'guestt', 'status' => 1])) {
+                  // Authentication passed...
+                  return redirect()->route('home');
+              }
+            }
         	}
-        	// else
-        	// {
-        	// 	echo 'buzzer';
-        	// }
         }
-        //return view('buzzer.index');
-        echo 'buzzer';
-       // echo '<script type="text/javascript">play_sound();</script>';
+
+        echo 'buzzer'."<br>";
+        // echo decrypt($key->$key->role);
+        $password = Hash::make($key->password);
+        echo $password;
     }
 }
