@@ -26,7 +26,7 @@ class CheckController extends Controller
         $email = $request->email;
         $phone = $request->phone;
 
-        echo $ip." ".$email." ".$phone;
+        // echo $ip." ".$email." ".$phone;
         echo "<br>";
         foreach ($check as $key)
         {
@@ -67,9 +67,6 @@ class CheckController extends Controller
         	}
         }
 
-        echo 'buzzer'."<br>";
-        // echo decrypt($key->$key->role);
-        $password = Hash::make($key->password);
-        echo $password;
+        return view('buzzer');
     }
 }
