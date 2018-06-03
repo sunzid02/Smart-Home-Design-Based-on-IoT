@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\File;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Session;
 
 class FileController extends Controller
 {
@@ -27,20 +28,6 @@ class FileController extends Controller
             $rgb2 = imagecolorat($im2, 10, 15);
 
             $colors2 = imagecolorsforindex($im2, $rgb2);
-            //var_dump($colors2);
-
-            //--------------------------
-
-
-            // $filesize = $file->getSize();
-            // $file->move('uploads', $file->getClientOriginalName());
-            // echo $filesize;
-
-            // $f = new File();
-            // $f->Name = $filename;
-            // $f->Size = $filesize;
-            // $f->save();
-            // return 'yes';
 
             $file = DB::table('files')
                     ->get();
@@ -70,22 +57,9 @@ class FileController extends Controller
             }
 
         }
-        return view('file.unkown')->with('pic',$ph);
-
+          Session::put('imagePath',$ph);
+         return redirect()->route('mail.send');
         }
-        /*if($request->hasFile('pic'))
-        {
-            $file = $request->file('pic');
-            echo 'File Name: ', $file->getClientOriginalName(), '<br/>';
-            echo 'File Extension: ', $file->getClientOriginalExtension(), '<br/>';
-            echo 'File Size: ', $file->getSize(), '<br/>';
-            echo 'File MIME Type: ', $file->getMimeType(), '<br/>';
-
-            $file->move('uploads', $file->getClientOriginalName());
-        }*/
-
-
-
         else
         {
             echo 'Error uploading file';
@@ -96,70 +70,11 @@ class FileController extends Controller
 
     }
 
-    /*public function check(Request $request)
+    public function addImage()
     {
-
-    	if($request->hasFile('pic'))
-    	{
-    		//$file = $request->file('pic');
-    		$filename =  $request->pic->getClientOriginalName();
-    		//echo $filename;
-    		//$value = $request->value;
-    		//echo $value;
-    		//echo 'File Extension: ', $file->getClientOriginalExtension(), '<br/>';
-    		//echo 'File Size: ', $file->getSize(), '<br/>';
-    		//echo 'File MIME Type: ', $file->getMimeType(), '<br/>';
-
-    		//$file->move('uploads', $file->getClientOriginalName());
-            $y = null;
-
-    		$file = DB::table('files')
-    				->get();
-    		//echo $file->$request->Name;
-    		//var_dump($file);
-    		foreach ($file as $key) {
-    			//echo $key->Name;
-    			if($key->Value == $value)
-    			{
-    				//echo 'yes';
-                    //$y = "yes";
-                    //echo $value;
-                    //break;
-                    /*if($y == "yes")
-                    {
-                        echo $value;
-                        break;
-                    }
-                    else
-                    {
-                        echo 'no';
-                    }*/
-                    //return redirect()->route('password.index');
-    			//}
-                /*else
-                {
-                    echo 'no';
-                    //break;
-                }*/
-    			/*if($y == "yes")
-    			{
-    				echo $value;
-                    break;
-    			}
-                else
-                {
-                    echo 'no';
-                }
-    		}
-
-            return view('file.unkown');
-
-    	}
-    	else
-    	{
-    		echo 'Error uploading file';
-    	}
-    }*/
+      // code...
+      return view('usertype.admin.imageAdd');
+    }
 
     public function save(Request $request)
     {
@@ -176,7 +91,9 @@ class FileController extends Controller
             $f->Name = $filename;
             $f->Size = $filesize;
             $f->save();
-            return 'yes';
+            Session::flash('imageAdd', 'Image added successfully!');
+
+            return redirect()->route('registershow.showAllUsers');
             // echo $request->pic;
             // echo "protik";
         }

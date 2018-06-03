@@ -17,7 +17,9 @@ Route::get('/', function () {
 
 Route::get('/file', 'FileController@index')->name('file.index');
 Route::post('/file', 'FileController@store')->name('store.index');
+Route::get('/file/add', 'FileController@addImage')->name('file.addImage');
 Route::post('/file/save', 'FileController@save')->name('save.index');
+
 Route::get('/password','PasswordController@index')->name('password.index');
 Route::post('/password','PasswordController@verify')->name('password.varify');
 Route::get('/check', 'CheckController@index')->name('check.index');
@@ -31,18 +33,30 @@ Route::post('/register/edit/{id}', 'RegisterShowController@update')->name('regis
 Route::get('/register/deactivate/{id}', 'RegisterShowController@deactivateUser')->name('registershow.deactivateUser');
 Route::get('/register/activate/{id}', 'RegisterShowController@activateUser')->name('registershow.activateUser');
 
-
+//Admin Room
 Route::get('/home/room', 'RoomController@index')->name('room.index');
+Route::get('/adminroom/on/{id}', 'RoomController@deviceOn')->name('room.deviceOn');
+Route::get('/adminroom/off/{id}', 'RoomController@deviceOff')->name('room.deviceOff');
 
+//subadmin room device
+Route::get('/subadminroom/on/{id}', 'RoomController@subAdminDeviceOn')->name('room.subAdminDeviceOn');
+Route::get('/subadminroom/off/{id}', 'RoomController@subAdminDeviceOff')->name('room.subAdminDeviceOff');
 
+//guest room
+Route::get('/guest/on/{id}', 'RoomController@guestDeviceOn')->name('room.guestDeviceOn');
+Route::get('/guest/off/{id}', 'RoomController@guestDeviceOff')->name('room.guestDeviceOff');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Test sunzid Email
-Route::get('sendemail', 'MailController@send');
+Route::get('/sendemail', 'MailController@send')->name('mail.send');
+Route::get('/sendemail/test', 'MailController@test')->name('mail.test');
+
+
+//verify after image not matched
+Route::Post('/verify', 'VerifyController@check')->name('verify.check');

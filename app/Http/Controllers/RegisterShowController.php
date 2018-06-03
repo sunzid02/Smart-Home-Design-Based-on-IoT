@@ -118,7 +118,7 @@ class RegisterShowController extends Controller
         {
             echo 'Error uploading file';
         }
-        
+
         //-------------------------------------------------
 
       //if ($password == $passwordC)
@@ -144,26 +144,7 @@ class RegisterShowController extends Controller
 
 
         return redirect()->route('registershow.showAllUsers');
-      //}
-      // else
-      // {
-      //   // return redirect()->route('registershow.index');
-      //   // echo '<script language="javascript">';
-      //   // echo 'alert("password not matched")';
-      //   // // return redirect()->route('registershow.index');
-      //   //
-      //   // echo '</script>';
-      //   $message = "Username and/or Password incorrect.\\nTry again.";
-      //   echo "<script type='text/javascript'>alert('$message');</script>";
-      //   header("Refresh: 0.05");
-      //   // exit;
-      //
-      //   // echo "<script type='javascript/text'>";
-      //   // echo 'alert("password not matched")';
-      //   // // echo "window.location.href = ".redirect()->route('registershow.index');
-      //   // echo "</script>";
-      //
-      // }
+
     }
 
     //userEdit

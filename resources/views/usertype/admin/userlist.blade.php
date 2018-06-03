@@ -33,15 +33,6 @@ admin
                   <th>Option</th>
                 </tr>
 
-              <!-- <tfoot>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Created On</th>
-                  <th>Updated On</th>
-                </tr>
-              </tfoot> -->
               <tbody>
                 @foreach ($allUsers as $au)
                   <tr>
@@ -55,6 +46,7 @@ admin
                   <td> {{ $au['phone'] }} </td>
                   <td>
                     <a href="{{route('registershow.edit', $au->id)}}" class="btn btn-default">Edit</a>
+                    <a href="{{route('file.addImage')}}" class="btn btn-primary">Image</a>
                   </td>
                   @else
                   <td> {{ $au['id'] }} </td>
@@ -68,6 +60,7 @@ admin
                     @if($au['status'] == 1)
                     <a href="{{route('registershow.edit', $au->id)}}" class="btn btn-default">Edit</a>
                     <a href="{{route('registershow.deactivateUser', $au->id)}}" class="btn btn-danger">Deactivate</a>
+                    <a href="{{route('file.addImage')}}" class="btn btn-primary">Image</a>
                     @else
                     <a href="{{route('registershow.edit', $au->id)}}" class="btn btn-default">Edit</a>
                     <a href="{{route('registershow.activateUser', $au->id)}}" class="btn btn-info">Activate</a>
@@ -87,6 +80,12 @@ admin
                 @if(Session::has('deactivate'))
                 <label>
                   {{ Session::get('deactivate') }}
+                </label>
+              @endif
+
+                @if(Session::has('imageAdd'))
+                <label>
+                  {{ Session::get('imageAdd') }}
                 </label>
               @endif
 

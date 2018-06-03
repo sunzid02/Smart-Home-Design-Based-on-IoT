@@ -7,6 +7,7 @@ use App\Room;
 use App\User;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Session;
 
 class RoomController extends Controller
 {
@@ -59,4 +60,69 @@ class RoomController extends Controller
     }
 
   }
+
+
+
+      //device off
+      public function deviceOff(Request $request)
+      {
+        $id = $request->id;
+        $name = $request->name;
+        DB::table('rooms')->where('id', $id)
+        ->update(['status' => 0]);
+        Session::flash('off', 'Device off!');
+        return redirect()->route('room.index');
+      }
+
+      //device On
+      public function deviceOn(Request $request)
+      {
+        $id = $request->id;
+        DB::table('rooms')->where('id', $id)
+        ->update(['status' => 1]);
+        Session::flash('on', 'Device On !');
+        return redirect()->route('room.index');
+      }
+
+      // subadmindevice off
+      public function subAdminDeviceOff(Request $request)
+      {
+        $id = $request->id;
+        $name = $request->name;
+        DB::table('subadmin_room_device')->where('id', $id)
+        ->update(['status' => 0]);
+        Session::flash('off', 'Device off!');
+        return redirect()->route('room.index');
+      }
+
+      //subadmin device On
+      public function subAdminDeviceOn(Request $request)
+      {
+        $id = $request->id;
+        DB::table('subadmin_room_device')->where('id', $id)
+        ->update(['status' => 1]);
+        Session::flash('on', 'Device On !');
+        return redirect()->route('room.index');
+      }
+
+      // guest off
+      public function guestDeviceOff(Request $request)
+      {
+        $id = $request->id;
+        $name = $request->name;
+        DB::table('guest_room_device')->where('id', $id)
+        ->update(['status' => 0]);
+        Session::flash('off', 'Device off!');
+        return redirect()->route('room.index');
+      }
+
+      //guest device On
+      public function guestDeviceOn(Request $request)
+      {
+        $id = $request->id;
+        DB::table('guest_room_device')->where('id', $id)
+        ->update(['status' => 1]);
+        Session::flash('on', 'Device On !');
+        return redirect()->route('room.index');
+      }
 }

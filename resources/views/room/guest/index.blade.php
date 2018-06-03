@@ -11,43 +11,57 @@ Device
 
 
 @section('contents')
-	<!-- Example DataTables Card-->
-	<div class="card mb-3">
-		<div class="card-header">
-		<div class="card-body">
-			<div class="table-responsive">
-					<form>
-						{{ csrf_field() }}
-						<table class="table table-bordered" id="dataTable" width="50%" cellspacing="0" align="center" >
+<!-- Example DataTables Card-->
+<div class="card mb-3">
+  <div class="card-header">
+  <div class="card-body">
+    <div class="table-responsive">
+        <form>
+          {{ csrf_field() }}
+          <table class="table table-bordered" id="dataTable" width="50%" cellspacing="0" align="center" >
 
-								<tr>
-									<th>ID</th>
-									<th>Device Name</th>
-									<th>Toggle Switch</th>
-								</tr>
-							<tbody>
-								@foreach ($device as $au)
-									<tr>
-										<td> {{ $au->id }} </td>
-										<td> {{ $au->device }} </td>
-										<td>
-											<label class="switch" >
-												<input type="checkbox" checked  id="dev">
-												<span class="slider round"></span>
-											</label>
-										</td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-				</form>
-			</div>
-			<div class="">
+              <tr>
+                <th>ID</th>
+                <th>Device Name</th>
+                <th>Toggle Switch</th>
+              </tr>
+            <tbody>
+              @foreach ($device as $au)
+                <tr>
+                  <td> {{ $au->id }} </td>
+                  <td> {{ $au->device }} </td>
+                  <td>
+                    @if($au->status == 1)
+                    <a href="{{route('room.guestDeviceOff', $au->id)}}" class="btn btn-danger">OFF</a>
+                    @else
+                    <a href="{{route('room.guestDeviceOn', $au->id)}}" class="btn btn-primary">ON</a>
+                    @endif
+                  </td>
+                </tr>
+              @endforeach
 
-			</div>
-		</div>
-	</div>
-	</div>
+
+        @if(Session::has('on'))
+        <label>
+          {{ Session::get('on') }}
+        </label>
+      @endif
+
+        @if(Session::has('off'))
+        <label>
+          {{ Session::get('off') }}
+        </label>
+      @endif
+            </tbody>
+          </table>
+      </form>
+    </div>
+    <div class="">
+
+    </div>
+  </div>
+</div>
+</div>
 @stop
 
 @section('footer')
